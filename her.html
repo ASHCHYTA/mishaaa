@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mishaa</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8e6ff;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+        }
+
+        .envelope {
+            width: 320px;
+            height: 220px;
+            background: linear-gradient(to bottom, #ff7aa2, #ff477e);
+            position: relative;
+            cursor: pointer;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 20px;
+            border: 2px solid #d633ff;
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(to bottom, #ff477e, #ff3366);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transition: transform 0.6s ease-in-out;
+            transform-origin: top;
+            box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .letter {
+            width: 280px;
+            height: 160px;
+            background: #ffe6f8;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            transition: transform 0.8s ease-in-out;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            visibility: hidden;
+        }
+
+        .show-letter {
+            transform: translateX(-50%) translateY(-20%);
+            visibility: visible;
+        }
+
+        .message-box {
+            font-size: 1.6rem;
+            color: #d633ff;
+            border: 4px solid #d633ff;
+            padding: 15px;
+            border-radius: 12px;
+            background-color: #ffe6f8;
+            display: none;
+            width: 300px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-box img {
+            width: 150px;
+            height: 150px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .buttons {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        button {
+            padding: 0.8rem 1.2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .yes {
+            background-color: #d633ff;
+            color: white;
+        }
+
+        .yes:hover {
+            background-color: #b824cc;
+            transform: scale(1.1);
+        }
+
+        .no {
+            background-color: #ffe6f8;
+            color: #d633ff;
+            position: relative;
+        }
+
+        .no:hover {
+            background-color: #d633ff;
+            color: #ffe6f8;
+            transform: scale(1.1);
+        }
+
+        .click-text {
+            font-size: 1.2rem;
+            color: #d633ff;
+            font-style: italic;
+            margin-top: 10px;
+        }
+    </style>
+
+    <script>
+        function openEnvelope() {
+            document.getElementById("flap").style.transform = "rotateX(180deg)";
+            setTimeout(() => {
+                document.getElementById("letter").classList.add("show-letter");
+                setTimeout(() => document.getElementById("messageBox").style.display = "block", 600);
+            }, 600);
+        }
+
+        function moveNoButton() {
+            let noButton = document.querySelector('.no');
+            let randomX = Math.random() * 200 - 100;
+            let randomY = Math.random() * 200 - 100;
+            noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        function showYesAlert() {
+            const alertBox = document.createElement('div');
+            alertBox.style.position = 'fixed';
+            alertBox.style.top = '50%';
+            alertBox.style.left = '50%';
+            alertBox.style.transform = 'translate(-50%, -50%)';
+            alertBox.style.background = '#ffe6f8';
+            alertBox.style.padding = '20px';
+            alertBox.style.borderRadius = '12px';
+            alertBox.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+            alertBox.style.textAlign = 'center';
+            
+            const img = document.createElement('img');
+            img.src = 'https://media.tenor.com/CNDKrV_8rSgAAAAi/sanrio.gif';
+            img.style.width = '150px';
+            img.style.height = '150px';
+            img.style.display = 'block';
+            img.style.margin = '10px auto';
+            
+            const message = document.createElement('div');
+            message.innerHTML = 'THANK YOU SO MUCHHHH, BABYY!!!';
+            message.style.fontSize = '1.2rem';
+            message.style.textAlign = 'center';
+            
+            alertBox.appendChild(img);
+            alertBox.appendChild(message);
+            document.body.appendChild(alertBox);
+
+            setTimeout(() => {
+                alertBox.remove();
+            }, 3000);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id="envelope" class="envelope" onclick="openEnvelope()">
+            <div id="flap" class="flap"></div>
+            <div id="letter" class="letter">💌</div>
+        </div>
+        <p class="click-text">OPEN MO PLSSSS</p>
+        
+        <div id="messageBox" class="message-box">
+            <img src="https://media.tenor.com/w23llJ1mGvIAAAAi/milk-and-mocha.gif" alt="Valentine Card">
+            <h1>Will you be my Valentine?</h1>
+            <div class="buttons">
+                <button class="yes" onclick="showYesAlert()">Yes</button>
+                <button class="no" onclick="moveNoButton()">No</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
